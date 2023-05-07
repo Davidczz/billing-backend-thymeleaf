@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Invoice</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+    <link rel="stylesheet" th:href="@{src/main/resources/static/css/style.css}"/>
+</head>
+<body>
+<div class="container">
+
+    <div class="row mb-2">
+        <div class="col-md-6">
+            <img class="img-fluid float-right" style="max-height:90px;"
+                 th:src="@{src/main/resources/static/images/logo.png}"/>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <h1>Invoice #[[${invoice.invoiceNumber}]]</h1>
+        </div>
+    </div>
+
+  <div class="row mt-2">
+    <div class="col-md-6">
+      <h5>Émetteur:</h5>
+      <div class="row">
+        <div class="col-md-4 header">
+          <p>
+            <span class="adress-label">Société</span>
+            <span class="adress-label">Votre contact</span>
+            <span class="adress-label">Adresse</span>
+            <span class="adress-label"></span>
+            <span class="adress-label">Pays</span>
+            <span class="adress-label">Numéro de TVA</span>
+          </p>
+        </div>
+        <div class="col-md-8 header">
+          <p>
+            [[${invoice.companyFrom.companyName}]]
+            [[${invoice.companyFrom.firstName}]] [[${invoice.companyFrom.lastName}]]
+            [[${invoice.companyFrom.street}]] [[${invoice.companyFrom.streetNumber}]]
+            <br/>
+            [[${invoice.companyFrom.postalCode}]] [[${invoice.companyFrom.city}]]
+            <br/>
+            [[${invoice.companyFrom.country}]]
+            <br/>
+            [[${invoice.companyFrom.vatNumber}]]
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h5>Destinataire:</h5>
+      <div class="row">
+        <div class="col-md-4 header">
+          <p>
+            <span class="adress-label" th:if="${invoice.companyTo != null}">Société</span>
+            <span class="adress-label" th:if="${invoice.companyTo != null}">Votre contact</span>
+            <span class="adress-label" th:if="${invoice.companyTo != null}">Adresse</span>
+            <span class="adress-label" th:if="${invoice.companyTo != null}"></span>
+            <span class="adress-label" th:if="${invoice.companyTo != null}">Pays</span>
+            <span class="adress-label" th:if="${invoice.companyTo != null}">Numéro de TVA</span>
+            <span class="adress-label"
+                  th:if="${invoice.privateCustomerTo != null}">Nom du client</span>
+            <span class="adress-label"
+                  th:if="${invoice.privateCustomerTo != null}">Adresse</span>
+            <span class="adress-label"
+                  th:if="${invoice.privateCustomerTo != null}"></span>
+            <span class="adress-label"
+                  th:if="${invoice.privateCustomerTo != null}">Pays</span>
+          </p>
+        </div>
+          <div class="col-md-8 header">
+              <p th:if="${invoice.companyTo != null}">
+                  <span>Société</span>&nbsp;&nbsp;[[${invoice.companyTo.companyName}]]<br/>
+                  <span>Contact</span>&nbsp;&nbsp;[[${invoice.companyTo.firstName}]] [[${invoice.companyTo.lastName}]]<br/>
+                  <span>Adresse</span>&nbsp;&nbsp;[[${invoice.companyTo.street}]] [[${invoice.companyTo.streetNumber}]]<br/>
+                  <span></span>&nbsp;&nbsp;[[${invoice.companyTo.postalCode}]] [[${invoice.companyTo.city}]]<br/>
+                  <span>Pays</span>&nbsp;&nbsp;[[${invoice.companyTo.country}]]<br/>
+                  <span>Numéro de TVA</span>&nbsp;&nbsp;[[${invoice.companyTo.vatNumber}]]
+              </p>
+              <p th:if="${invoice.privateCustomerTo != null}">
+                  <span>Client</span>&nbsp;&nbsp;[[${invoice.privateCustomerTo.firstName}]] [[${invoice.privateCustomerTo.lastName}]]<br/>
+                  <span>Adresse</span>&nbsp;&nbsp;[[${invoice.privateCustomerTo.street}]] [[${invoice.privateCustomerTo.streetNumber}]]<br/>
+                  <span></span>&nbsp;&nbsp;[[${invoice.privateCustomerTo.postalCode}]] [[${invoice.privateCustomerTo.city}]]<br/>
+                  <span>Pays</span>&nbsp;&nbsp;[[${invoice.privateCustomerTo.country}]]
+              </p>
+          </div>
+      </div>
+    </div>
+
+  </div>
+
+          <div class="row mt-2">
+        <div class="col-sm-7">
+            <table class="table table-striped">
+                <thead class="thead-light">
+                <tr>
+                    <th>#</th>
+                    <th>Description</th>
+                    <th class="col-sm-2">Quantity</th>
+                    <th class="col-sm-2">Price</th>
+                    <th class="col-sm-2">Total</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item, index : ${invoice.elements}">
+                    <td th:text="${index.index + 1}"></td>
+                    <td class="col-sm-7" th:text="${item.label}"></td>
+                    <td class="col-sm-2" th:text="${item.quantity}"></td>
+                    <td class="col-sm-2" th:text="${item.priceExclVat}"></td>
+                    <td class="col-sm-2" th:text="${item.total}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="row mt-2">
+        <div class="col">
+            <p>Payment Method: [[${invoice.paymentMethod}]]</p>
+            <p>Account Number: [[${invoice.accountNumber}]]</p>
+            <p>Additional Text: [[${invoice.additionalText}]]</p>
+            <p>Date: [[${#temporals.format(invoice.invoiceDate, 'dd/MM/yyyy')}]]</p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

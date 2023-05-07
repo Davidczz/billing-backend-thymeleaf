@@ -1,0 +1,17 @@
+body {
+
+}
+
+.header p {
+    font-size:11pt;
+    line-height: 1.2;
+}
+
+.adress-label {
+    font-weight: bold;
+    color: #282424;
+}
+
+.padding-right-20 {
+    padding-right:20px;
+}
