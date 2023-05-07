@@ -1,17 +1,18 @@
 package be.gold.agency.backendbill.models;
 
-public enum PaymentMethod {
-    BANK_TRANSFER("Virement bancaire"),
-    CASH("Cash"),
-    CREDIT_CARD("Carte de crédit"),
-    STRIPE("Stripe");
-
+public enum ElementType {
+    JOUR("Jour"),
+    DIVERS("Divers"),
+    SERVICE("Service"),
+    ARTICLE("Article");
     private final String displayName;
-    PaymentMethod(String displayName) {
+
+    ElementType(String displayName) {
         this.displayName = displayName;
     }
 
     public String getDisplayName() {
         return displayName;
     }
+
 }

@@ -1,5 +1,6 @@
 body {
-
+ font-size: 11pt;
+    font-family: 'Open Sans', sans-serif;
 }
 
 .header p {
@@ -7,11 +8,36 @@ body {
     line-height: 1.2;
 }
 
-.adress-label {
-    font-weight: bold;
-    color: #282424;
+.header {
+    text-align: left;
+}
+
+.address-label {
+    color: #a4a2a2;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
 }
 
 .padding-right-20 {
     padding-right:20px;
+}
+
+.date {
+    color: #b2b1b1;
+    padding-top:-10px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.footer {
+    position:fixed !important;
+    bottom:0;
+    left:0;
+    font-weight: 300;
+    color: #b2b1b1;
+    text-align: left;
 }

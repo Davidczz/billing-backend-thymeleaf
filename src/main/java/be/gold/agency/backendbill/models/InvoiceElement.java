@@ -1,6 +1,6 @@
 package be.gold.agency.backendbill.models;
 
-import be.gold.agency.backendbill.tools.VATCalculator;
+import be.gold.agency.backendbill.tools.InvoiceCalculator;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,11 +16,16 @@ public class InvoiceElement {
     private Integer number;
     private String label;
     private String description;
-    private Integer quantity;
+    private BigDecimal quantity;
     private BigDecimal priceExclVat;
     private BigDecimal vatRate;
+    private ElementType elementType;
 
     public BigDecimal getTotal() {
-        return VATCalculator.calculateTaxesIncludedAmount(priceExclVat, vatRate);
+        return InvoiceCalculator.calculateTaxesIncludedAmount(priceExclVat, vatRate);
+    }
+
+    public BigDecimal getTotalExclVat() {
+        return InvoiceCalculator.calculateTotalHT(priceExclVat, quantity);
     }
 }
