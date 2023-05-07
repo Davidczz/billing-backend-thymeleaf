@@ -6,9 +6,7 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itextpdf.html2pdf.HtmlConverter;
 import com.itextpdf.kernel.geom.PageSize;
-import com.itextpdf.kernel.pdf.DocumentProperties;
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.kernel.pdf.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.ITemplateEngine;
@@ -21,6 +19,8 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 @Service
 public class InvoiceService {
@@ -78,26 +78,25 @@ public class InvoiceService {
     }
 
 
-    public byte[] generateInvoiceList(List<Invoice> invoiceList)  {
-        byte[] pdfBytes = null;
+    public byte[] generateInvoiceList(List<Invoice> invoiceList) throws Exception {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        ZipOutputStream zipOutputStream = new ZipOutputStream(outputStream);
 
-        // Create a context for Thymeleaf with the invoice list data
-        Context context = new Context();
-        context.setVariable("invoiceList", invoiceList);
+        for (Invoice invoice : invoiceList) {
+            byte[] pdfBytes = generateInvoice(invoice);
+            ZipEntry zipEntry = new ZipEntry(invoice.getInvoiceNumber() + ".pdf");
+            zipOutputStream.putNextEntry(zipEntry);
+            zipOutputStream.write(pdfBytes);
+            zipOutputStream.closeEntry();
+        }
 
-        // Process the Thymeleaf template to generate the HTML content
-        String htmlContent = templateEngine.process("invoice_list_template.html", context);
-
-        // Generate the PDF from the HTML content using Flying Saucer
-//        ITextRenderer renderer = new ITextRenderer();
-//        renderer.setDocumentFromString(htmlContent);
-//        renderer.layout();
-//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//        renderer.createPDF(baos);
-//        pdfBytes = baos.toByteArray();
-
-        return pdfBytes;
+        zipOutputStream.close();
+        return outputStream.toByteArray();
     }
+
+
+
+
 
     public List<Invoice> getInvoiceList(String invoiceListJson) throws IOException {
         return objectMapper.readValue(invoiceListJson, listInvoiceType);

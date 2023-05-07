@@ -30,13 +30,14 @@ public class InvoiceController {
         return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(pdfBytes);
     }
 
-    @PostMapping(value = "/batch", produces = MediaType.APPLICATION_PDF_VALUE)
-    public ResponseEntity<byte[]> generateBatchInvoices(@RequestBody List<Invoice> invoiceList)  {
-        byte[] pdfBytes = invoiceService.generateInvoiceList(invoiceList);
+    @PostMapping(value = "/batch", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    public ResponseEntity<byte[]> generateBatchInvoices(@RequestBody List<Invoice> invoiceList) throws Exception {
+        byte[] zipBytes = invoiceService.generateInvoiceList(invoiceList);
         HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"invoice_list.pdf\"");
-        return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(pdfBytes);
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"invoice_list.zip\"");
+        return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_OCTET_STREAM).body(zipBytes);
     }
+
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getInvoices(@RequestParam(name = "list") String invoiceListJson) throws IOException {

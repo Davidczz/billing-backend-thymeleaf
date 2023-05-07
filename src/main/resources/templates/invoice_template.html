@@ -89,7 +89,7 @@
                             </tr>
                             <tr th:if="${invoice.privateCustomerTo != null}">
                                 <th class="address-label" scope="row" nowrap>Client</th>
-                                <td th:text="${invoice.privateCustomerTo.firstName} + ' ' + ${invoice.privateCustomerTo.lastName}"></td>
+                                <td class="bold" th:text="${invoice.privateCustomerTo.firstName} + ' ' + ${invoice.privateCustomerTo.lastName}"></td>
                             </tr>
                             <tr th:if="${invoice.privateCustomerTo != null}">
                                 <th class="address-label" scope="row" nowrap>addresse</th>
