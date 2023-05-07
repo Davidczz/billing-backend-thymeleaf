@@ -1,0 +1,52 @@
+{
+  "companyFrom": {
+    "firstName": "John",
+    "lastName": "Doe",
+    "companyName": "ABC Company",
+    "street": "123 Main Street",
+    "streetNumber": "",
+    "postalCode": "1000",
+    "city": "Brussels",
+    "country": "Belgium",
+    "vatNumber": "BE123456789",
+    "email": "john.doe@abccompany.com",
+    "phone": "+32 2 123 45 67"
+  },
+  "companyTo": {
+    "firstName": "Jane",
+    "lastName": "Doe",
+    "companyName": "XYZ Inc.",
+    "street": "456 Oak Street",
+    "streetNumber": "",
+    "postalCode": "2000",
+    "city": "Antwerp",
+    "country": "Belgium",
+    "vatNumber": "BE987654321",
+    "email": "jane.doe@xyzinc.com",
+    "phone": "+32 3 987 65 43"
+  },
+  "privateCustomerTo": null,
+  "elements": [
+    {
+      "number": 1,
+      "label": "Product A",
+      "description": "A nice product",
+      "quantity": 2,
+      "priceExclVat": 10.00,
+      "vatRate": 21
+    },
+    {
+      "number": 2,
+      "label": "Product B",
+      "description": "Another nice product",
+      "quantity": 1,
+      "priceExclVat": 20.00,
+      "vatRate": 21
+    }
+  ],
+  "paymentMethod": "BANK_TRANSFER",
+  "accountNumber": "BE12 3456 7890 1234",
+  "additionalText": "Thank you for your business!",
+  "invoiceNumber": "2022-001",
+  "invoiceDate": "2022-05-10"
+}
